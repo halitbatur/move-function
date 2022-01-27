@@ -1,4 +1,4 @@
-const cloneDeep = require('lodash/cloneDeep');
+import { cloneDeep } from 'lodash';
 import { Folder, Indexes } from './types';
 import { findNeededIndexes, handleEdgeCases, modifiyList } from './utils';
 

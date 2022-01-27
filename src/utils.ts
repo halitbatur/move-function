@@ -1,5 +1,5 @@
 import { Folder, Indexes, ItemFile } from './types';
-import { ERRORS } from './errors';
+import ERRORS from './errors';
 
 export function findNeededIndexes(list: Folder[], source: string, destination: string): Indexes {
   const indexes: Indexes = {};
@@ -8,7 +8,7 @@ export function findNeededIndexes(list: Folder[], source: string, destination: s
       indexes.destinationIndex = folderIndex;
     }
     if (folder.id === source) {
-      throw ERRORS['CANNOT_MOVE_FOLDER'];
+      throw ERRORS.CANNOT_MOVE_FOLDER;
     }
 
     folder.files.forEach((file: ItemFile, fileIndex: number) => {
@@ -17,7 +17,7 @@ export function findNeededIndexes(list: Folder[], source: string, destination: s
         indexes.sourceFolderIndex = folderIndex;
       }
       if (file.id === destination) {
-        throw ERRORS['FILE_AS_DESTINATION'];
+        throw ERRORS.FILE_AS_DESTINATION;
       }
     });
   });
@@ -27,15 +27,15 @@ export function findNeededIndexes(list: Folder[], source: string, destination: s
 
 export function handleEdgeCases(indexes: Indexes): void {
   if (indexes.destinationIndex === undefined && indexes.sourceFileIndex === undefined) {
-    throw ERRORS['FILE_AND_FOLDER_DOES_NOT_EXIST'];
+    throw ERRORS.FILE_AND_FOLDER_DOES_NOT_EXIST;
   }
 
   if (indexes.sourceFileIndex === undefined) {
-    throw ERRORS['FILE_DOES_NOT_EXIST'];
+    throw ERRORS.FILE_DOES_NOT_EXIST;
   }
 
   if (indexes.destinationIndex === undefined) {
-    throw ERRORS['FOLDER_DOES_NOT_EXIST'];
+    throw ERRORS.FOLDER_DOES_NOT_EXIST;
   }
 }
 
