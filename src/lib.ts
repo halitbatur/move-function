@@ -1,6 +1,6 @@
+import { cloneDeep } from 'lodash';
 import { Folder, Indexes, ItemFile } from './types';
 import ERRORS from './errors';
-import { cloneDeep } from 'lodash';
 
 export function findNeededIndexes(list: Folder[], source: string, destination: string): Indexes {
   const indexes: Indexes = {};
