@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash';
 import { Folder, Indexes } from './types';
-import { findNeededIndexes, handleEdgeCases, modifiyList } from './utils';
+import { findNeededIndexes, handleEdgeCases, modifiyList } from './lib';
 
 export default function move(list: Folder[], source: string, destination: string): Folder[] {
   const editedList: Folder[] = cloneDeep(list);

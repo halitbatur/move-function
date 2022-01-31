@@ -46,8 +46,8 @@ export function modifiyList(editedList: Folder[], indexes: Indexes): void {
     sourceFolderIndex !== undefined &&
     destinationIndex !== undefined
   ) {
-    const file = editedList[sourceFolderIndex].files[sourceFileIndex];
+    const sourceFile = editedList[sourceFolderIndex].files[sourceFileIndex];
     editedList[sourceFolderIndex].files.splice(sourceFileIndex, 1);
-    editedList[destinationIndex].files.push(file);
+    editedList[destinationIndex].files.push(sourceFile);
   }
 }
