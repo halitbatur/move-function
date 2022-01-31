@@ -1,5 +1,6 @@
 import { Folder, Indexes, ItemFile } from './types';
 import ERRORS from './errors';
+import { cloneDeep } from 'lodash';
 
 export function findNeededIndexes(list: Folder[], source: string, destination: string): Indexes {
   const indexes: Indexes = {};
@@ -25,7 +26,7 @@ export function findNeededIndexes(list: Folder[], source: string, destination: s
   return indexes;
 }
 
-export function handleEdgeCases(indexes: Indexes): void {
+export function thorwIfIndexIsInvalid(indexes: Indexes): void {
   if (indexes.destinationIndex === undefined && indexes.sourceFileIndex === undefined) {
     throw ERRORS.FILE_AND_FOLDER_DOES_NOT_EXIST;
   }
@@ -39,7 +40,9 @@ export function handleEdgeCases(indexes: Indexes): void {
   }
 }
 
-export function modifiyList(editedList: Folder[], indexes: Indexes): void {
+export function moveFileWithinList(list: Folder[], indexes: Indexes): Folder[] {
+  const editedList: Folder[] = cloneDeep(list);
+
   const { sourceFileIndex, sourceFolderIndex, destinationIndex } = indexes;
   if (
     sourceFileIndex !== undefined &&
@@ -50,4 +53,6 @@ export function modifiyList(editedList: Folder[], indexes: Indexes): void {
     editedList[sourceFolderIndex].files.splice(sourceFileIndex, 1);
     editedList[destinationIndex].files.push(sourceFile);
   }
+
+  return editedList;
 }
