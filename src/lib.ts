@@ -4,25 +4,25 @@ import ERRORS from './errors';
 
 export function findNeededIndexes(
   list: Folder[],
-  source: string,
-  destination: string,
+  sourceFileId: string,
+  destinationFolderId: string,
 ): FilePathChangeIndexMap {
   const indexes: FilePathChangeIndexMap = {};
 
   list.forEach((folder: Folder, folderIndex: number) => {
-    if (folder.id === destination) {
+    if (folder.id === destinationFolderId) {
       indexes.destinationIndex = folderIndex;
     }
-    if (folder.id === source) {
+    if (folder.id === sourceFileId) {
       throw ERRORS.CANNOT_MOVE_FOLDER;
     }
 
     folder.files.forEach((file: ItemFile, fileIndex: number) => {
-      if (file.id === source) {
+      if (file.id === sourceFileId) {
         indexes.sourceFileIndex = fileIndex;
         indexes.sourceFolderIndex = folderIndex;
       }
-      if (file.id === destination) {
+      if (file.id === destinationFolderId) {
         throw ERRORS.FILE_AS_DESTINATION;
       }
     });

@@ -7,7 +7,7 @@ export interface Folder extends ItemFile {
   files: ItemFile[];
 }
 
-export interface Indexes {
+export interface FilePathChangeIndexMap {
   destinationIndex?: number;
   sourceFolderIndex?: number;
   sourceFileIndex?: number;
