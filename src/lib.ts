@@ -26,7 +26,7 @@ export function findNeededIndexes(list: Folder[], source: string, destination: s
   return indexes;
 }
 
-export function thorwIfIndexIsInvalid(indexes: Indexes): void {
+export function throwIfIndexIsInvalid(indexes: Indexes): void {
   if (indexes.destinationIndex === undefined && indexes.sourceFileIndex === undefined) {
     throw ERRORS.FILE_AND_FOLDER_DOES_NOT_EXIST;
   }
