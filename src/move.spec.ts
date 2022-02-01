@@ -1,4 +1,11 @@
 import move from './move';
+import {
+  CannotMoveFolderError,
+  CannotSelectFileAsDestinationError,
+  FileDoesNotExistError,
+  FolderDoesNotExistError,
+  FileAndFolderDoesNotExistError,
+} from './errors';
 
 describe('move', () => {
   it('moves given file to another folder', () => {
@@ -53,7 +60,7 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [] },
     ];
 
-    expect(() => move(list, '3', '1')).toThrow('You cannot move a folder');
+    expect(() => move(list, '3', '1')).toThrow(CannotMoveFolderError);
   });
 
   it('throws error if given destination is not a folder', () => {
@@ -66,7 +73,7 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [{ id: '4', name: 'File 2' }] },
     ];
 
-    expect(() => move(list, '2', '4')).toThrow('You cannot specify a file as the destination');
+    expect(() => move(list, '2', '4')).toThrow(CannotSelectFileAsDestinationError);
   });
 
   it('throws error if given source does not exist', () => {
@@ -79,7 +86,7 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [{ id: '4', name: 'File 2' }] },
     ];
 
-    expect(() => move(list, '25', '3')).toThrow('You cannot move a file that does not exist!');
+    expect(() => move(list, '25', '3')).toThrow(FileDoesNotExistError);
   });
 
   it('throws error if given destination does not exist', () => {
@@ -92,9 +99,7 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [{ id: '4', name: 'File 2' }] },
     ];
 
-    expect(() => move(list, '2', '25')).toThrow(
-      'You cannot move a file to a folder that does not exist!',
-    );
+    expect(() => move(list, '2', '25')).toThrow(FolderDoesNotExistError);
   });
 
   it('throws error if given destination and source does not exist', () => {
@@ -107,6 +112,6 @@ describe('move', () => {
       { id: '3', name: 'Folder 2', files: [{ id: '4', name: 'File 2' }] },
     ];
 
-    expect(() => move(list, '25', '25')).toThrow('Both file and folder does not exist!');
+    expect(() => move(list, '25', '25')).toThrow(FileAndFolderDoesNotExistError);
   });
 });

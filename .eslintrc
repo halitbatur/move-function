@@ -22,6 +22,10 @@
   "rules": {
     "prettier/prettier": "error",
     "eslint-comments/no-unused-disable": "error",
-    "jest/prefer-expect-assertions": "off"
+    "jest/prefer-expect-assertions": "off",
+    "max-classes-per-file": [
+      "error",
+       5
+  ]
   }
 }
