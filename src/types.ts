@@ -1,11 +1,14 @@
-export type ItemFile = { id: string; name: string };
+export interface ItemFile {
+  id: string;
+  name: string;
+}
 
 export interface Folder extends ItemFile {
   files: ItemFile[];
 }
 
-export type Indexes = {
+export interface Indexes {
   destinationIndex?: number;
   sourceFolderIndex?: number;
   sourceFileIndex?: number;
-};
+}

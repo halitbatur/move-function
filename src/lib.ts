@@ -1,9 +1,14 @@
 import { cloneDeep } from 'lodash';
-import { Folder, Indexes, ItemFile } from './types';
+import { Folder, FilePathChangeIndexMap, ItemFile } from './types';
 import ERRORS from './errors';
 
-export function findNeededIndexes(list: Folder[], source: string, destination: string): Indexes {
-  const indexes: Indexes = {};
+export function findNeededIndexes(
+  list: Folder[],
+  source: string,
+  destination: string,
+): FilePathChangeIndexMap {
+  const indexes: FilePathChangeIndexMap = {};
+
   list.forEach((folder: Folder, folderIndex: number) => {
     if (folder.id === destination) {
       indexes.destinationIndex = folderIndex;
@@ -26,7 +31,7 @@ export function findNeededIndexes(list: Folder[], source: string, destination: s
   return indexes;
 }
 
-export function throwIfIndexIsInvalid(indexes: Indexes): void {
+export function throwIfIndexIsInvalid(indexes: FilePathChangeIndexMap): void {
   if (indexes.destinationIndex === undefined && indexes.sourceFileIndex === undefined) {
     throw ERRORS.FILE_AND_FOLDER_DOES_NOT_EXIST;
   }
@@ -40,7 +45,7 @@ export function throwIfIndexIsInvalid(indexes: Indexes): void {
   }
 }
 
-export function moveFileWithinList(list: Folder[], indexes: Indexes): Folder[] {
+export function moveFileWithinList(list: Folder[], indexes: FilePathChangeIndexMap): Folder[] {
   const editedList: Folder[] = cloneDeep(list);
 
   const { sourceFileIndex, sourceFolderIndex, destinationIndex } = indexes;
