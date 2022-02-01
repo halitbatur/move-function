@@ -8,7 +8,7 @@ export interface Folder extends FileItem {
 }
 
 export interface FilePathChangeIndexMap {
-  destinationIndex?: number;
-  sourceFolderIndex?: number;
-  sourceFileIndex?: number;
+  destination?: number;
+  sourceFolder?: number;
+  sourceFile?: number;
 }

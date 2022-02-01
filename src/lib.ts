@@ -11,7 +11,7 @@ export function findNeededIndexes(
 
   list.forEach((folder: Folder, folderIndex: number) => {
     if (folder.id === destinationFolderId) {
-      indexes.destinationIndex = folderIndex;
+      indexes.destination = folderIndex;
     }
     if (folder.id === sourceFileId) {
       throw ERRORS.CANNOT_MOVE_FOLDER;
@@ -19,8 +19,8 @@ export function findNeededIndexes(
 
     folder.files.forEach((file: FileItem, fileIndex: number) => {
       if (file.id === sourceFileId) {
-        indexes.sourceFileIndex = fileIndex;
-        indexes.sourceFolderIndex = folderIndex;
+        indexes.sourceFile = fileIndex;
+        indexes.sourceFolder = folderIndex;
       }
       if (file.id === destinationFolderId) {
         throw ERRORS.FILE_AS_DESTINATION;
@@ -31,33 +31,33 @@ export function findNeededIndexes(
   return indexes;
 }
 
-export function throwIfIndexIsInvalid(indexes: FilePathChangeIndexMap): void {
-  if (indexes.destinationIndex === undefined && indexes.sourceFileIndex === undefined) {
+export function throwIfIndexIsInvalid(
+  indexes: FilePathChangeIndexMap,
+): Required<FilePathChangeIndexMap> {
+  if (indexes.destination === undefined && indexes.sourceFile === undefined) {
     throw ERRORS.FILE_AND_FOLDER_DOES_NOT_EXIST;
   }
 
-  if (indexes.sourceFileIndex === undefined) {
+  if (indexes.sourceFile === undefined) {
     throw ERRORS.FILE_DOES_NOT_EXIST;
   }
 
-  if (indexes.destinationIndex === undefined) {
+  if (indexes.destination === undefined) {
     throw ERRORS.FOLDER_DOES_NOT_EXIST;
   }
+
+  return indexes as Required<FilePathChangeIndexMap>;
 }
 
-export function moveFileWithinList(list: Folder[], indexes: FilePathChangeIndexMap): Folder[] {
+export function moveFileWithinList(
+  list: Folder[],
+  indexes: Required<FilePathChangeIndexMap>,
+): Folder[] {
   const editedList: Folder[] = cloneDeep(list);
 
-  const { sourceFileIndex, sourceFolderIndex, destinationIndex } = indexes;
-  if (
-    sourceFileIndex !== undefined &&
-    sourceFolderIndex !== undefined &&
-    destinationIndex !== undefined
-  ) {
-    const sourceFile = editedList[sourceFolderIndex].files[sourceFileIndex];
-    editedList[sourceFolderIndex].files.splice(sourceFileIndex, 1);
-    editedList[destinationIndex].files.push(sourceFile);
-  }
+  const sourceFileContent = editedList[indexes.sourceFolder].files[indexes.sourceFile];
+  editedList[indexes.sourceFolder].files.splice(indexes.sourceFile, 1);
+  editedList[indexes.destination].files.push(sourceFileContent);
 
   return editedList;
 }

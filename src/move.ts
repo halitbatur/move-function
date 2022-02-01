@@ -4,6 +4,6 @@ import { findNeededIndexes, throwIfIndexIsInvalid, moveFileWithinList } from './
 export default function move(list: Folder[], source: string, destination: string): Folder[] {
   const indexes: FilePathChangeIndexMap = findNeededIndexes(list, source, destination);
 
-  throwIfIndexIsInvalid(indexes);
-  return moveFileWithinList(list, indexes);
+  const validatedIndexes = throwIfIndexIsInvalid(indexes);
+  return moveFileWithinList(list, validatedIndexes);
 }
