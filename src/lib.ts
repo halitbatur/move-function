@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { Folder, FilePathChangeIndexMap, ItemFile } from './types';
+import { Folder, FilePathChangeIndexMap, FileItem } from './types';
 import ERRORS from './errors';
 
 export function findNeededIndexes(
@@ -17,7 +17,7 @@ export function findNeededIndexes(
       throw ERRORS.CANNOT_MOVE_FOLDER;
     }
 
-    folder.files.forEach((file: ItemFile, fileIndex: number) => {
+    folder.files.forEach((file: FileItem, fileIndex: number) => {
       if (file.id === sourceFileId) {
         indexes.sourceFileIndex = fileIndex;
         indexes.sourceFolderIndex = folderIndex;

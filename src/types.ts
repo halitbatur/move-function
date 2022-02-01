@@ -1,10 +1,10 @@
-export interface ItemFile {
+export interface FileItem {
   id: string;
   name: string;
 }
 
-export interface Folder extends ItemFile {
-  files: ItemFile[];
+export interface Folder extends FileItem {
+  files: FileItem[];
 }
 
 export interface FilePathChangeIndexMap {
